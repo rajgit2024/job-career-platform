@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { logout } from '../services/authService';
 import { getJobs } from '../services/jobService';
+import { Link } from 'react-router-dom';
 
 const STATUS_LABELS = {
   saved: 'Saved',
@@ -76,6 +77,7 @@ export default function Dashboard() {
         >
           Logout
         </button>
+        <Link to="/jobs" className="text-blue-600 text-sm">View All →</Link>
       </div>
 
       <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">

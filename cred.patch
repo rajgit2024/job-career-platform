@@ -1,0 +1,627 @@
+diff --git a/job-career-platform/.gitignore b/.gitignore
+similarity index 100%
+rename from job-career-platform/.gitignore
+rename to .gitignore
+diff --git a/job-career-platform/Dockerfile b/Dockerfile
+similarity index 100%
+rename from job-career-platform/Dockerfile
+rename to Dockerfile
+diff --git a/job-career-platform/config/__init__.py b/config/__init__.py
+similarity index 100%
+rename from job-career-platform/config/__init__.py
+rename to config/__init__.py
+diff --git a/job-career-platform/config/asgi.py b/config/asgi.py
+similarity index 100%
+rename from job-career-platform/config/asgi.py
+rename to config/asgi.py
+diff --git a/job-career-platform/config/settings.py b/config/settings.py
+similarity index 100%
+rename from job-career-platform/config/settings.py
+rename to config/settings.py
+diff --git a/job-career-platform/config/urls.py b/config/urls.py
+similarity index 100%
+rename from job-career-platform/config/urls.py
+rename to config/urls.py
+diff --git a/job-career-platform/config/wsgi.py b/config/wsgi.py
+similarity index 100%
+rename from job-career-platform/config/wsgi.py
+rename to config/wsgi.py
+diff --git a/job-career-platform/core/__init__.py b/core/__init__.py
+similarity index 100%
+rename from job-career-platform/core/__init__.py
+rename to core/__init__.py
+diff --git a/job-career-platform/core/admin.py b/core/admin.py
+similarity index 100%
+rename from job-career-platform/core/admin.py
+rename to core/admin.py
+diff --git a/job-career-platform/core/apps.py b/core/apps.py
+similarity index 100%
+rename from job-career-platform/core/apps.py
+rename to core/apps.py
+diff --git a/job-career-platform/core/migrations/__init__.py b/core/migrations/__init__.py
+similarity index 100%
+rename from job-career-platform/core/migrations/__init__.py
+rename to core/migrations/__init__.py
+diff --git a/job-career-platform/core/models.py b/core/models.py
+similarity index 100%
+rename from job-career-platform/core/models.py
+rename to core/models.py
+diff --git a/job-career-platform/core/tests.py b/core/tests.py
+similarity index 100%
+rename from job-career-platform/core/tests.py
+rename to core/tests.py
+diff --git a/job-career-platform/core/urls.py b/core/urls.py
+similarity index 100%
+rename from job-career-platform/core/urls.py
+rename to core/urls.py
+diff --git a/job-career-platform/core/views.py b/core/views.py
+similarity index 100%
+rename from job-career-platform/core/views.py
+rename to core/views.py
+diff --git a/job-career-platform/docker-compose.yml b/docker-compose.yml
+similarity index 100%
+rename from job-career-platform/docker-compose.yml
+rename to docker-compose.yml
+diff --git a/job-career-platform/frontend/.gitignore b/frontend/.gitignore
+similarity index 100%
+rename from job-career-platform/frontend/.gitignore
+rename to frontend/.gitignore
+diff --git a/job-career-platform/frontend/README.md b/frontend/README.md
+similarity index 100%
+rename from job-career-platform/frontend/README.md
+rename to frontend/README.md
+diff --git a/job-career-platform/frontend/eslint.config.js b/frontend/eslint.config.js
+similarity index 100%
+rename from job-career-platform/frontend/eslint.config.js
+rename to frontend/eslint.config.js
+diff --git a/job-career-platform/frontend/index.html b/frontend/index.html
+similarity index 100%
+rename from job-career-platform/frontend/index.html
+rename to frontend/index.html
+diff --git a/job-career-platform/frontend/package-lock.json b/frontend/package-lock.json
+similarity index 100%
+rename from job-career-platform/frontend/package-lock.json
+rename to frontend/package-lock.json
+diff --git a/job-career-platform/frontend/package.json b/frontend/package.json
+similarity index 100%
+rename from job-career-platform/frontend/package.json
+rename to frontend/package.json
+diff --git a/job-career-platform/frontend/public/favicon.svg b/frontend/public/favicon.svg
+similarity index 100%
+rename from job-career-platform/frontend/public/favicon.svg
+rename to frontend/public/favicon.svg
+diff --git a/job-career-platform/frontend/public/icons.svg b/frontend/public/icons.svg
+similarity index 100%
+rename from job-career-platform/frontend/public/icons.svg
+rename to frontend/public/icons.svg
+diff --git a/job-career-platform/frontend/src/App.css b/frontend/src/App.css
+similarity index 100%
+rename from job-career-platform/frontend/src/App.css
+rename to frontend/src/App.css
+diff --git a/job-career-platform/frontend/src/App.jsx b/frontend/src/App.jsx
+similarity index 53%
+rename from job-career-platform/frontend/src/App.jsx
+rename to frontend/src/App.jsx
+index 7268dbe..97efdce 100644
+--- a/job-career-platform/frontend/src/App.jsx
++++ b/frontend/src/App.jsx
+@@ -2,6 +2,9 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+ import Login from './pages/Login';
+ import Register from './pages/Register';
+ import Dashboard from './pages/Dashboard';
++import JobsList from './pages/JobsList';
++import AddJob from './pages/AddJob';
++import EditJob from './pages/EditJob';
+ import ProtectedRoute from './components/ProtectedRoute';
+ 
+ export default function App() {
+@@ -11,14 +14,10 @@ export default function App() {
+         <Route path="/" element={<Navigate to="/login" />} />
+         <Route path="/login" element={<Login />} />
+         <Route path="/register" element={<Register />} />
+-        <Route
+-          path="/dashboard"
+-          element={
+-            <ProtectedRoute>
+-              <Dashboard />
+-            </ProtectedRoute>
+-          }
+-        />
++        <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
++        <Route path="/jobs" element={<ProtectedRoute><JobsList /></ProtectedRoute>} />
++        <Route path="/jobs/new" element={<ProtectedRoute><AddJob /></ProtectedRoute>} />
++        <Route path="/jobs/:id/edit" element={<ProtectedRoute><EditJob /></ProtectedRoute>} />
+       </Routes>
+     </BrowserRouter>
+   );
+diff --git a/job-career-platform/frontend/src/assets/hero.png b/frontend/src/assets/hero.png
+similarity index 100%
+rename from job-career-platform/frontend/src/assets/hero.png
+rename to frontend/src/assets/hero.png
+diff --git a/job-career-platform/frontend/src/assets/react.svg b/frontend/src/assets/react.svg
+similarity index 100%
+rename from job-career-platform/frontend/src/assets/react.svg
+rename to frontend/src/assets/react.svg
+diff --git a/job-career-platform/frontend/src/assets/vite.svg b/frontend/src/assets/vite.svg
+similarity index 100%
+rename from job-career-platform/frontend/src/assets/vite.svg
+rename to frontend/src/assets/vite.svg
+diff --git a/frontend/src/components/JobForm.jsx b/frontend/src/components/JobForm.jsx
+new file mode 100644
+index 0000000..0b322ea
+--- /dev/null
++++ b/frontend/src/components/JobForm.jsx
+@@ -0,0 +1,124 @@
++import { useState } from 'react';
++
++const STATUS_OPTIONS = ['saved', 'applied', 'interview', 'rejected', 'selected'];
++
++export default function JobForm({ initialData, onSubmit, submitLabel }) {
++  const [form, setForm] = useState({
++    company: initialData?.company || '',
++    position: initialData?.position || '',
++    location: initialData?.location || '',
++    job_url: initialData?.job_url || '',
++    description: initialData?.description || '',
++    status: initialData?.status || 'saved',
++    applied_date: initialData?.applied_date || '',
++    notes: initialData?.notes || '',
++  });
++  const [error, setError] = useState('');
++  const [loading, setLoading] = useState(false);
++
++  const handleChange = (e) => {
++    setForm({ ...form, [e.target.name]: e.target.value });
++  };
++
++  const handleSubmit = async (e) => {
++    e.preventDefault();
++    setError('');
++    setLoading(true);
++    try {
++      const payload = { ...form, applied_date: form.applied_date || null };
++      await onSubmit(payload);
++    } catch (err) {
++      setError('Something went wrong. Check your inputs and try again.');
++    } finally {
++      setLoading(false);
++    }
++  };
++
++  return (
++    <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow max-w-lg">
++      {error && <p className="text-red-600 text-sm mb-4">{error}</p>}
++
++      <label className="block text-sm font-medium mb-1">Company</label>
++      <input
++        name="company"
++        value={form.company}
++        onChange={handleChange}
++        className="w-full border rounded px-3 py-2 mb-3"
++        required
++      />
++
++      <label className="block text-sm font-medium mb-1">Position</label>
++      <input
++        name="position"
++        value={form.position}
++        onChange={handleChange}
++        className="w-full border rounded px-3 py-2 mb-3"
++        required
++      />
++
++      <label className="block text-sm font-medium mb-1">Location</label>
++      <input
++        name="location"
++        value={form.location}
++        onChange={handleChange}
++        className="w-full border rounded px-3 py-2 mb-3"
++      />
++
++      <label className="block text-sm font-medium mb-1">Job URL</label>
++      <input
++        name="job_url"
++        type="url"
++        value={form.job_url}
++        onChange={handleChange}
++        className="w-full border rounded px-3 py-2 mb-3"
++      />
++
++      <label className="block text-sm font-medium mb-1">Status</label>
++      <select
++        name="status"
++        value={form.status}
++        onChange={handleChange}
++        className="w-full border rounded px-3 py-2 mb-3"
++      >
++        {STATUS_OPTIONS.map((s) => (
++          <option key={s} value={s}>{s}</option>
++        ))}
++      </select>
++
++      <label className="block text-sm font-medium mb-1">Applied Date</label>
++      <input
++        name="applied_date"
++        type="date"
++        value={form.applied_date}
++        onChange={handleChange}
++        className="w-full border rounded px-3 py-2 mb-3"
++      />
++
++      <label className="block text-sm font-medium mb-1">Description</label>
++      <textarea
++        name="description"
++        value={form.description}
++        onChange={handleChange}
++        className="w-full border rounded px-3 py-2 mb-3"
++        rows={3}
++      />
++
++      <label className="block text-sm font-medium mb-1">Notes</label>
++      <textarea
++        name="notes"
++        value={form.notes}
++        onChange={handleChange}
++        className="w-full border rounded px-3 py-2 mb-4"
++        rows={2}
++      />
++
++      <button
++        type="submit"
++        disabled={loading}
++        className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 disabled:opacity-50"
++      >
++        {loading ? 'Saving...' : submitLabel}
++      </button>
++    </form>
++  );
++}
+\ No newline at end of file
+diff --git a/job-career-platform/frontend/src/components/ProtectedRoute.jsx b/frontend/src/components/ProtectedRoute.jsx
+similarity index 100%
+rename from job-career-platform/frontend/src/components/ProtectedRoute.jsx
+rename to frontend/src/components/ProtectedRoute.jsx
+diff --git a/job-career-platform/frontend/src/context/AuthContext.jsx b/frontend/src/context/AuthContext.jsx
+similarity index 100%
+rename from job-career-platform/frontend/src/context/AuthContext.jsx
+rename to frontend/src/context/AuthContext.jsx
+diff --git a/job-career-platform/frontend/src/index.css b/frontend/src/index.css
+similarity index 100%
+rename from job-career-platform/frontend/src/index.css
+rename to frontend/src/index.css
+diff --git a/job-career-platform/frontend/src/main.jsx b/frontend/src/main.jsx
+similarity index 100%
+rename from job-career-platform/frontend/src/main.jsx
+rename to frontend/src/main.jsx
+diff --git a/frontend/src/pages/AddJob.jsx b/frontend/src/pages/AddJob.jsx
+new file mode 100644
+index 0000000..31e2eaa
+--- /dev/null
++++ b/frontend/src/pages/AddJob.jsx
+@@ -0,0 +1,19 @@
++import { useNavigate } from 'react-router-dom';
++import JobForm from '../components/JobForm';
++import { createJob } from '../services/jobService';
++
++export default function AddJob() {
++  const navigate = useNavigate();
++
++  const handleCreate = async (payload) => {
++    await createJob(payload);
++    navigate('/jobs');
++  };
++
++  return (
++    <div className="p-8">
++      <h1 className="text-2xl font-bold mb-6">Add Job Application</h1>
++      <JobForm onSubmit={handleCreate} submitLabel="Add Job" />
++    </div>
++  );
++}
+\ No newline at end of file
+diff --git a/job-career-platform/frontend/src/pages/Dashboard.jsx b/frontend/src/pages/Dashboard.jsx
+similarity index 96%
+rename from job-career-platform/frontend/src/pages/Dashboard.jsx
+rename to frontend/src/pages/Dashboard.jsx
+index 43bdd0f..dd1ed4f 100644
+--- a/job-career-platform/frontend/src/pages/Dashboard.jsx
++++ b/frontend/src/pages/Dashboard.jsx
+@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
+ import { useAuth } from '../context/AuthContext';
+ import { logout } from '../services/authService';
+ import { getJobs } from '../services/jobService';
++import { Link } from 'react-router-dom';
+ 
+ const STATUS_LABELS = {
+   saved: 'Saved',
+@@ -76,6 +77,7 @@ export default function Dashboard() {
+         >
+           Logout
+         </button>
++        <Link to="/jobs" className="text-blue-600 text-sm">View All →</Link>
+       </div>
+ 
+       <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
+diff --git a/frontend/src/pages/EditJob.jsx b/frontend/src/pages/EditJob.jsx
+new file mode 100644
+index 0000000..69b7b64
+--- /dev/null
++++ b/frontend/src/pages/EditJob.jsx
+@@ -0,0 +1,34 @@
++import { useEffect, useState } from 'react';
++import { useParams, useNavigate } from 'react-router-dom';
++import JobForm from '../components/JobForm';
++import { getJob, updateJob } from '../services/jobService';
++
++export default function EditJob() {
++  const { id } = useParams();
++  const navigate = useNavigate();
++  const [job, setJob] = useState(null);
++  const [loading, setLoading] = useState(true);
++  const [error, setError] = useState('');
++
++  useEffect(() => {
++    getJob(id)
++      .then((res) => setJob(res.data))
++      .catch(() => setError('Could not load this job.'))
++      .finally(() => setLoading(false));
++  }, [id]);
++
++  const handleUpdate = async (payload) => {
++    await updateJob(id, payload);
++    navigate('/jobs');
++  };
++
++  if (loading) return <div className="p-8 text-gray-500">Loading...</div>;
++  if (error) return <div className="p-8 text-red-600">{error}</div>;
++
++  return (
++    <div className="p-8">
++      <h1 className="text-2xl font-bold mb-6">Edit Job Application</h1>
++      <JobForm initialData={job} onSubmit={handleUpdate} submitLabel="Save Changes" />
++    </div>
++  );
++}
+\ No newline at end of file
+diff --git a/frontend/src/pages/JobsList.jsx b/frontend/src/pages/JobsList.jsx
+new file mode 100644
+index 0000000..aa935e2
+--- /dev/null
++++ b/frontend/src/pages/JobsList.jsx
+@@ -0,0 +1,91 @@
++import { useEffect, useState } from 'react';
++import { Link } from 'react-router-dom';
++import api from '../services/api';
++import { deleteJob } from '../services/jobService';
++
++export default function JobsList() {
++  const [jobs, setJobs] = useState([]);
++  const [nextUrl, setNextUrl] = useState(null);
++  const [prevUrl, setPrevUrl] = useState(null);
++  const [count, setCount] = useState(0);
++  const [loading, setLoading] = useState(true);
++  const [error, setError] = useState('');
++
++  const fetchPage = async (url) => {
++    setLoading(true);
++    setError('');
++    try {
++      // url is either a full URL (from next/previous) or undefined (first load)
++      const response = url ? await api.get(url) : await api.get('/jobs/');
++      setJobs(response.data.results);
++      setNextUrl(response.data.next);
++      setPrevUrl(response.data.previous);
++      setCount(response.data.count);
++    } catch (err) {
++      setError('Could not load jobs.');
++    } finally {
++      setLoading(false);
++    }
++  };
++
++  useEffect(() => {
++    fetchPage();
++  }, []);
++
++  const handleDelete = async (id) => {
++    if (!confirm('Delete this application?')) return;
++    await deleteJob(id);
++    fetchPage(); // refresh current view from page 1; simplest correct behavior after a delete
++  };
++
++  if (loading) return <div className="p-8 text-gray-500">Loading...</div>;
++  if (error) return <div className="p-8 text-red-600">{error}</div>;
++
++  return (
++    <div className="p-8 max-w-4xl mx-auto">
++      <div className="flex justify-between items-center mb-6">
++        <h1 className="text-2xl font-bold">All Applications ({count})</h1>
++        <Link
++          to="/jobs/new"
++          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
++        >
++          + Add Job
++        </Link>
++      </div>
++
++      <div className="bg-white rounded-lg shadow divide-y mb-4">
++        {jobs.map((job) => (
++          <div key={job.id} className="p-4 flex justify-between items-center">
++            <div>
++              <p className="font-medium">{job.position}</p>
++              <p className="text-sm text-gray-500">{job.company} · {job.status}</p>
++            </div>
++            <div className="flex gap-3 text-sm">
++              <Link to={`/jobs/${job.id}/edit`} className="text-blue-600">Edit</Link>
++              <button onClick={() => handleDelete(job.id)} className="text-red-600">
++                Delete
++              </button>
++            </div>
++          </div>
++        ))}
++      </div>
++
++      <div className="flex gap-3">
++        <button
++          disabled={!prevUrl}
++          onClick={() => fetchPage(prevUrl)}
++          className="px-3 py-1 border rounded disabled:opacity-40"
++        >
++          ← Previous
++        </button>
++        <button
++          disabled={!nextUrl}
++          onClick={() => fetchPage(nextUrl)}
++          className="px-3 py-1 border rounded disabled:opacity-40"
++        >
++          Next →
++        </button>
++      </div>
++    </div>
++  );
++}
+\ No newline at end of file
+diff --git a/job-career-platform/frontend/src/pages/Login.jsx b/frontend/src/pages/Login.jsx
+similarity index 100%
+rename from job-career-platform/frontend/src/pages/Login.jsx
+rename to frontend/src/pages/Login.jsx
+diff --git a/job-career-platform/frontend/src/pages/Register.jsx b/frontend/src/pages/Register.jsx
+similarity index 100%
+rename from job-career-platform/frontend/src/pages/Register.jsx
+rename to frontend/src/pages/Register.jsx
+diff --git a/job-career-platform/frontend/src/services/api.js b/frontend/src/services/api.js
+similarity index 100%
+rename from job-career-platform/frontend/src/services/api.js
+rename to frontend/src/services/api.js
+diff --git a/job-career-platform/frontend/src/services/authService.js b/frontend/src/services/authService.js
+similarity index 100%
+rename from job-career-platform/frontend/src/services/authService.js
+rename to frontend/src/services/authService.js
+diff --git a/frontend/src/services/jobService.js b/frontend/src/services/jobService.js
+new file mode 100644
+index 0000000..7be1177
+--- /dev/null
++++ b/frontend/src/services/jobService.js
+@@ -0,0 +1,21 @@
++import api from './api';
++
++export const getJobs = (params = {}) => {
++  return api.get('/jobs/', { params });
++};
++
++export const getJob = (id) => {
++  return api.get(`/jobs/${id}/`);
++};
++
++export const createJob = (data) => {
++  return api.post('/jobs/', data);
++};
++
++export const updateJob = (id, data) => {
++  return api.patch(`/jobs/${id}/`, data);
++};
++
++export const deleteJob = (id) => {
++  return api.delete(`/jobs/${id}/`);
++};
+\ No newline at end of file
+diff --git a/job-career-platform/frontend/vite.config.js b/frontend/vite.config.js
+similarity index 100%
+rename from job-career-platform/frontend/vite.config.js
+rename to frontend/vite.config.js
+diff --git a/job-career-platform/frontend/src/services/jobService.js b/job-career-platform/frontend/src/services/jobService.js
+deleted file mode 100644
+index d662b4f..0000000
+--- a/job-career-platform/frontend/src/services/jobService.js
++++ /dev/null
+@@ -1,5 +0,0 @@
+-import api from './api';
+-
+-export const getJobs = (params = {}) => {
+-  return api.get('/jobs/', { params });
+-};
+\ No newline at end of file
+diff --git a/job-career-platform/jobs/__init__.py b/jobs/__init__.py
+similarity index 100%
+rename from job-career-platform/jobs/__init__.py
+rename to jobs/__init__.py
+diff --git a/job-career-platform/jobs/admin.py b/jobs/admin.py
+similarity index 100%
+rename from job-career-platform/jobs/admin.py
+rename to jobs/admin.py
+diff --git a/job-career-platform/jobs/apps.py b/jobs/apps.py
+similarity index 100%
+rename from job-career-platform/jobs/apps.py
+rename to jobs/apps.py
+diff --git a/job-career-platform/jobs/migrations/0001_initial.py b/jobs/migrations/0001_initial.py
+similarity index 100%
+rename from job-career-platform/jobs/migrations/0001_initial.py
+rename to jobs/migrations/0001_initial.py
+diff --git a/job-career-platform/jobs/migrations/__init__.py b/jobs/migrations/__init__.py
+similarity index 100%
+rename from job-career-platform/jobs/migrations/__init__.py
+rename to jobs/migrations/__init__.py
+diff --git a/job-career-platform/jobs/models.py b/jobs/models.py
+similarity index 100%
+rename from job-career-platform/jobs/models.py
+rename to jobs/models.py
+diff --git a/job-career-platform/jobs/serializers.py b/jobs/serializers.py
+similarity index 100%
+rename from job-career-platform/jobs/serializers.py
+rename to jobs/serializers.py
+diff --git a/job-career-platform/jobs/tests.py b/jobs/tests.py
+similarity index 100%
+rename from job-career-platform/jobs/tests.py
+rename to jobs/tests.py
+diff --git a/job-career-platform/jobs/urls.py b/jobs/urls.py
+similarity index 100%
+rename from job-career-platform/jobs/urls.py
+rename to jobs/urls.py
+diff --git a/job-career-platform/jobs/views.py b/jobs/views.py
+similarity index 100%
+rename from job-career-platform/jobs/views.py
+rename to jobs/views.py
+diff --git a/job-career-platform/manage.py b/manage.py
+similarity index 100%
+rename from job-career-platform/manage.py
+rename to manage.py
+diff --git a/job-career-platform/requirements.txt b/requirements.txt
+similarity index 100%
+rename from job-career-platform/requirements.txt
+rename to requirements.txt
+diff --git a/job-career-platform/users/__init__.py b/users/__init__.py
+similarity index 100%
+rename from job-career-platform/users/__init__.py
+rename to users/__init__.py
+diff --git a/job-career-platform/users/admin.py b/users/admin.py
+similarity index 100%
+rename from job-career-platform/users/admin.py
+rename to users/admin.py
+diff --git a/job-career-platform/users/apps.py b/users/apps.py
+similarity index 100%
+rename from job-career-platform/users/apps.py
+rename to users/apps.py
+diff --git a/job-career-platform/users/migrations/__init__.py b/users/migrations/__init__.py
+similarity index 100%
+rename from job-career-platform/users/migrations/__init__.py
+rename to users/migrations/__init__.py
+diff --git a/job-career-platform/users/models.py b/users/models.py
+similarity index 100%
+rename from job-career-platform/users/models.py
+rename to users/models.py
+diff --git a/job-career-platform/users/serializers.py b/users/serializers.py
+similarity index 100%
+rename from job-career-platform/users/serializers.py
+rename to users/serializers.py
+diff --git a/job-career-platform/users/tests.py b/users/tests.py
+similarity index 100%
+rename from job-career-platform/users/tests.py
+rename to users/tests.py
+diff --git a/job-career-platform/users/urls.py b/users/urls.py
+similarity index 100%
+rename from job-career-platform/users/urls.py
+rename to users/urls.py
+diff --git a/job-career-platform/users/views.py b/users/views.py
+similarity index 100%
+rename from job-career-platform/users/views.py
+rename to users/views.py
